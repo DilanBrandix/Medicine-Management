@@ -1,0 +1,48 @@
+
+<mat-grid-list cols="4" rowHeight="100%">
+  <mat-grid-tile>
+    <!-- <button mat-fab  routerLink='/inventory_details' class="button">
+  <mat-icon class="example-icon">medical_information</mat-icon>
+     </button> -->
+     <div class="example-button-container">
+        <mat-icon class="icon" routerLink='/inventory_details'>medical_information</mat-icon>
+        <br>
+        <h2 class="h2">Inventory Detail Report</h2>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div class="example-button-container">
+      <mat-icon class="icon" routerLink='/inventory_transaction'>description</mat-icon>
+      <br>
+        <h2 class="h2">Inventory Transaction Details</h2>
+  </div>
+    <!-- <button mat-raised-button  class="button">
+      Inventory Transaction Details
+      <br>
+      <mat-icon class="example-icon"></mat-icon>
+
+    </button> -->
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div class="example-button-container">
+      <mat-icon class="icon" routerLink='/stock_level'>show_chart</mat-icon>
+      <br>
+        <h2 class="h2">Minimum Stock Level</h2>
+  </div>
+    <!-- <button mat-raised-button  class="button" [matMenuTriggerFor]="menu">Aging Risk Report</button>
+    <mat-menu #menu="matMenu">
+      <button class="button1" mat-menu-item>Expire Details</button>
+      <button class="button1" mat-menu-item>Minimum Stock Level</button>
+    </mat-menu> -->
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div class="example-button-container">
+      <mat-icon class="icon" routerLink='/expire_details'>event_busy</mat-icon>
+      <br>
+        <h2 class="expire">Expire Details</h2>
+  </div>
+</mat-grid-tile>
+</mat-grid-list>
+
+
+

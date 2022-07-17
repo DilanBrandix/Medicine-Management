@@ -1,0 +1,44 @@
+body{
+  background-color: rgb(66, 66, 66);
+  color: #fff;
+  margin: 0%;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.mat-elevation-z8{
+
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+
+
+}
+table {
+  width: 100%;
+
+}
+td, th {
+  width: 20%;
+
+}
+.search{
+  width: 90%;
+  margin-top: 2%;
+  margin-left: 5%;
+}
+.button{
+  width: 100%;
+  background-color: white;
+  color: black;
+  height: 65%;
+}
+
+
+
+.example-icon{
+  margin-left: 90%;
+  margin-top: 2%;
+  background-color: white;
+  color: black;
+}

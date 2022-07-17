@@ -1,0 +1,90 @@
+
+<body>
+  <div class="body">
+    <div>
+      <button mat-fab  (click)="exporter.exportTable('xlsx', {fileName:'Current_Inventory'})"
+      class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>assignment</mat-icon>
+        </button>
+
+          <mat-form-field appearance="outline" class="search">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Enter Item" #input>
+          </mat-form-field>
+          <!-- <button mat-raised-button class="button"> Generate Report
+            <mat-icon matSuffix class="example-icon" aria-label="Example icon-button with menu icon">assignment</mat-icon>
+          </button> -->
+    </div>
+
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matTableExporter #exporter="matTableExporter" matSort>
+
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="item">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Item </th>
+          <td mat-cell *matCellDef="let row"> {{row.item}}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="sku">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> SKU </th>
+          <td mat-cell *matCellDef="let row"> {{row.sku}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="uom">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> UOM </th>
+          <td mat-cell *matCellDef="let row"> {{row.uom}} </td>
+        </ng-container>
+
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Received Date </th>
+          <td mat-cell *matCellDef="let row"> {{row.date | date}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="manufacture_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Manufacture Date </th>
+          <td mat-cell *matCellDef="let row"> {{row.manufacture_date | date}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expire_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Expire Date </th>
+          <td mat-cell *matCellDef="let row"> {{row.expire_date| date}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="trans_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Date </th>
+          <td mat-cell *matCellDef="let row"> {{row.trans_date| date}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="method">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Transaction Type</th>
+          <td mat-cell *matCellDef="let row"> {{row.method}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Transfer Quantity</th>
+          <td mat-cell *matCellDef="let row"> {{row.quantity}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+
+
+  </div>
+  </body>

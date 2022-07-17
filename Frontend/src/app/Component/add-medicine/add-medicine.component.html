@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>Add Medicine</h1>
+<div mat-dialog-content>
+  <form class="example-form" [formGroup]="medicineForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Item</mat-label>
+      <input formControlName = "item" matInput placeholder="Item">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>SKU</mat-label>
+      <input formControlName = "sku" matInput placeholder="SKU">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Select UOM</mat-label>
+      <mat-select formControlName="uom">
+        <mat-option value="Tablet">Tablet</mat-option>
+        <mat-option value="Capsule">Capsule</mat-option>
+        <mat-option value="Bottle">Bottle</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Minimum Stock Level </mat-label>
+      <input formControlName = "min_stock" matInput placeholder="Minimum Stock Level">
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-action [align]="'begin'">
+  <button mat-raised-button color="primary" (click)="addInventory()">Save</button>
+  <button mat-raised-button color="warn" class="button" mat-dialog-close>Close</button>
+</div>

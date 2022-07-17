@@ -1,0 +1,21 @@
+<mat-card class="card">
+  <mat-card class="card1"></mat-card>
+  <h1 class="title">Brandix</h1>
+  <h3 class="error" *ngIf="error">{{errorMessage}}</h3>
+    <form class="example-form">
+      <mat-form-field appearance="outline" class="username_field">
+        <mat-label>Username</mat-label>
+        <input matInput  name="username" [(ngModel)]="username" placeholder="EPF Number">
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline" class="username_field">
+        <mat-label>Password</mat-label>
+        <input matInput name="password" [(ngModel)]="password" [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
+  <button mat-raised-button color="primary" (click)="onSubmit()" class="button" routerLink="/view_medicine">Login</button>
+</mat-card>

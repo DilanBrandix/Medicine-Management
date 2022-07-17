@@ -1,0 +1,42 @@
+
+.button{
+  width: 40%;
+  height: 30%;
+  background-color: white;
+  color: black;
+  text-align:center;
+  text-align: center;
+}
+
+.button1{
+  height: 100%;
+  background-color: white;
+  color: black;
+}
+
+.example-icon{
+font-size: 100px;
+margin-left: 20%;
+background-color: white;
+}
+.example-button-container{
+  width: 70%;
+  height: 60%;
+}
+.icon{
+font-size: 150px;
+text-align: center;
+align-items: center;
+color: white;
+margin-left: 15%;
+margin-top: 20%;
+}
+.h2{
+  color: white;
+  margin-left: 5%;
+}
+.expire{
+  color: white;
+  margin-left: 20%;
+}
+

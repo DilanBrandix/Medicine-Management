@@ -1,0 +1,150 @@
+
+<mat-grid-list cols="2" rowHeight="100%">
+  <mat-grid-tile class="grid" >
+    <mat-card class="card">
+      <form class="example-form" [formGroup]="issueForm">
+
+        <mat-form-field appearance="outline" class = "inupt-Field" *ngFor="let sno of selections">
+          <mat-label>Issue no</mat-label>
+          <input matInput placeholder="Issue no" formControlName="issue_no" [(ngModel)]="sno.no"  [readonly]="true">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="inupt-Field">
+          <mat-label>Issue Date</mat-label>
+          <input matInput [matDatepicker]="dp1"  formControlName="issue_date" [disabled]="true">
+          <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+          <mat-datepicker #dp1></mat-datepicker>
+        </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline" class = "inupt-Field">
+        <mat-label>Select Item</mat-label>
+        <mat-select formControlName="item" [(ngModel)]="selectedItem" name="select">
+          <mat-option *ngFor="let select of selects" [value]="select.item" (click)="method(); method1()">{{select.item}}</mat-option>
+          <!-- <mat-option value="Amoxilin">Amoxilin</mat-option> -->
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline" class = "inupt-Field">
+        <mat-label>Select SKU</mat-label>
+        <mat-select formControlName="sku" [(ngModel)]="selectedSku" name = "sku">
+          <mat-option *ngFor="let sku of skus" [value]="sku.sku" (click)="getReceivedMedicine()">{{sku.sku}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="outline" class = "inupt-Field">
+        <mat-label>Select UOM</mat-label>
+        <mat-select formControlName="uom" >
+          <mat-option *ngFor="let uom of uoms" [value]="uom.uom">{{uom.uom}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline" class = "inupt-Field">
+          <mat-label>Method</mat-label>
+          <mat-select formControlName="method">
+            <mat-option value="issue">Issued</mat-option>
+            <mat-option value="transfered">Transfered</mat-option>
+            <mat-option value="discard">Discard</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline" class = "inupt-Field" *ngFor="let mdf of selections">
+          <mat-label>Manufactured Date</mat-label>
+          <input matInput [matDatepicker]="picker1" formControlName="manufacture_date" [(ngModel)]="mdf.manufacture_date"  [disabled]="true">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline" class = "inupt-Field" *ngFor="let mdf of selections">
+          <mat-label>Expire Date</mat-label>
+          <input matInput [matDatepicker]="picker2" formControlName="expire_date" [(ngModel)]="mdf.expire_date"  [disabled]="true">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+       <br>
+      <mat-form-field appearance="outline" class = "inupt-Field">
+        <mat-label>Quantity</mat-label>
+        <input matInput placeholder="Quantity" formControlName="quantity">
+      </mat-form-field>
+
+    </form>
+
+      <button mat-raised-button color="warn" class="button" (click)="issueMedicine()">Update</button>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="balance">
+          <th *matHeaderCellDef colspan="6" class="head">Balance With Aging (Dates)</th>
+          <td mat-cell *matCellDef="let element"> </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="no">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.no}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef> Received Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="manufacture_date">
+          <th mat-header-cell *matHeaderCellDef> Manufactured Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.manufacture_date | date}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expire_date">
+          <th mat-header-cell *matHeaderCellDef> Expire Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.expire_date | date}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="age">
+          <th mat-header-cell *matHeaderCellDef> Age </th>
+          <td mat-cell *matCellDef="let element"> {{calculateDiff(element.expire_date)}}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef> Quantity </th>
+          <td mat-cell *matCellDef="let element"> {{element.quantity}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedRows"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+        [ngClass]="{highlighted: selection.isSelected(row)}"
+      (click)="selectRow(row)"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[7, 14, 21]"
+                     showFirstLastButtons
+                     aria-label="Select page of periodic elements">
+      </mat-paginator>
+    </div>
+
+  </mat-grid-tile>
+
+  </mat-grid-list>
+
