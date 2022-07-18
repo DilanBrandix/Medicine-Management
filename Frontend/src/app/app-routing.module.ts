@@ -13,7 +13,7 @@ import { ExpireDetailsComponent } from './Component/expire-details/expire-detail
 import { AuthGuard } from './Component/authentication/authentication';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'view_medicine', pathMatch: 'full' },
+  // { path: '', redirectTo: 'view_medicine', pathMatch: 'full' },
   {
     path: 'receive_medicine',
     component: ReceiveMedicineComponent,

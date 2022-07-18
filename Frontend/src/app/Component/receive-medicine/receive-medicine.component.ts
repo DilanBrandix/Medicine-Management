@@ -68,7 +68,7 @@ export class ReceiveMedicineComponent implements OnInit {
   ) {}
 
 
-
+// ng onit loads data at the begining
   ngOnInit(): void {
     this.receiveForm = this.formBuilder.group({
       date: [this.date.value, Validators.required],
@@ -85,11 +85,12 @@ export class ReceiveMedicineComponent implements OnInit {
   this.method();
   this.method1();
   this.getReceivedMedicine();
+  // this.getBalanceQuantity();
 
   }
 
 
-  displayedColumns: string[] = ['no', 'date','manufacture_date','expire_date', 'age', 'quantity'];
+  displayedColumns: string[] = ['receive_date','manufacture_date','expire_date', 'age', 'Balance_qty'];
   dataSource!: MatTableDataSource<any>;
   selection = new SelectionModel<any>(false, []);
 
@@ -169,7 +170,12 @@ export class ReceiveMedicineComponent implements OnInit {
         next:(res)=>{
           // console.log(res);
           alert("Medicine Updated successfully")
-          this.receiveForm.reset();
+          this.receiveForm.controls['manufacture_date'].reset();
+          this.receiveForm.controls['expire_date'].reset();
+          this.receiveForm.controls['item'].reset();
+          this.receiveForm.controls['sku'].reset();
+          this.receiveForm.controls['uom'].reset();
+          this.receiveForm.controls['quantity'].reset();
           this.getReceivedMedicine();
 
         },
@@ -202,4 +208,17 @@ getReceivedMedicine(){
   })
 }
 }
+// getBalanceQuantity(){
+//   this.api.getBalance()
+//   .subscribe({
+//     next:(res)=>{
+//       this.balances=[];
+//         this.balances=res;
+//       console.log(this.balances);
+//     },
+//     error:(err)=>{
+//       alert("Error")
+//     }
+//   })
+// }
 }

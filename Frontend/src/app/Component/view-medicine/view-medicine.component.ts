@@ -36,7 +36,11 @@ export class ViewMedicineComponent implements OnInit {
   openDialog(){
     this.matdialog.open(AddMedicineComponent,{
       width: '30%',
-    });
+    }).afterClosed().subscribe(value=>{
+      if(value==='Save'){
+        this.getallMedicine();
+      }
+    })
 
   }
 
@@ -47,7 +51,7 @@ export class ViewMedicineComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      console.log(res);
+      // console.log(res);
     },
     error:(err)=>{
       alert("Error")

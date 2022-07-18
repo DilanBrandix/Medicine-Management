@@ -88,7 +88,7 @@ export class IssueMedicineComponent implements OnInit {
     this.getReceivedMedicine();
     this.issueMedicine();
   }
-  displayedColumns: string[] = ['no', 'date','manufacture_date','expire_date', 'age', 'quantity'];
+  displayedColumns: string[] = ['receive_date','manufacture_date','expire_date', 'age', 'Balance_qty'];
   dataSource!: MatTableDataSource<any>;
   selection = new SelectionModel<any>(false, []);
 
@@ -185,7 +185,14 @@ export class IssueMedicineComponent implements OnInit {
         next:(res)=>{
           console.log(res);
           alert("Medicine Issued successfully")
-          this.issueForm.reset();
+          this.issueForm.controls['issue_no'].reset();
+          this.issueForm.controls['item'].reset();
+          this.issueForm.controls['sku'].reset();
+          this.issueForm.controls['uom'].reset();
+          this.issueForm.controls['method'].reset();
+          this.issueForm.controls['manufacture_date'].reset();
+          this.issueForm.controls['expire_date'].reset();
+          this.issueForm.controls['quantity'].reset();
           this.getReceivedMedicine();
 
         },

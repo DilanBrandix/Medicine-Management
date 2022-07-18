@@ -64,4 +64,7 @@ getExpireDetails(){
 getMinStock(){
   return this.http.get<any>(`${this.apiUrl}/issue-medicine/min_stock`);
 }
+getBalance(){
+  return this.http.get<any>(`${this.apiUrl}/issue-medicine/balance`);
+}
 }

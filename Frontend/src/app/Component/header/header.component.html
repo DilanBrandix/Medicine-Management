@@ -1,14 +1,14 @@
 <p>
   <mat-toolbar class="mat-toolbar" color="primary">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" routerLink='/view_medicine'>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" >
       <mat-icon>local_hospital</mat-icon>
     </button>
     <span>Medical Center Inventory</span>
     <span class="example-spacer"></span>
 
-    <a mat-raised-button  class="button"  routerLink='/receive_medicine' *ngIf="userDetails.getAdmin()">Receive Medicine</a>
-    <a mat-raised-button  class="button"  routerLink='/issue_medicine' *ngIf="userDetails.getAdmin()">Issue Medicine</a>
-    <a mat-raised-button  class="button"  routerLink='/view_report' *ngIf="userDetails.getAdmin()">Reports</a>
+    <a mat-raised-button  class="button"  routerLink='/receive_medicine' *ngIf="!userDetails.getAdmin()">Receive Medicine</a>
+    <a mat-raised-button  class="button"  routerLink='/issue_medicine' *ngIf="!userDetails.getAdmin()">Issue Medicine</a>
+    <a mat-raised-button  class="button"  routerLink='/view_report' *ngIf="!userDetails.getAdmin()">Reports</a>
     <a mat-raised-button class="button" (click)="logOut()" >Logout</a>
   </mat-toolbar>
 </p>

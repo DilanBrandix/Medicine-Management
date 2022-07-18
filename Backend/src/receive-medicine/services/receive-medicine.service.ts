@@ -28,7 +28,7 @@ export class ReceiveMedicineService {
 
   async getSpecificSkuItem(item: string, sku: string): Promise<any> {
     return await this.receivemedicineRepository.query(
-      `EXECUTE get_item_details '${item}','${sku}'`,
+      `EXECUTE get_item_balance '${item}','${sku}'`,
     );
   }
 

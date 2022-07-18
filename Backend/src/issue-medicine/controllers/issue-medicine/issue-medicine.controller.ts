@@ -35,4 +35,8 @@ export class IssueMedicineController {
   findMinStockLevel(): Promise<any> {
     return this.issuemedicineService.findMinStockLevel();
   }
+  @Get('balance')
+  getBalance(): Promise<any> {
+    return this.issuemedicineService.getBalance();
+  }
 }

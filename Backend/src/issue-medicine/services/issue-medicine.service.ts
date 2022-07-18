@@ -33,4 +33,7 @@ export class IssueMedicineService {
   async findMinStockLevel(): Promise<any> {
     return await this.issuemedicineRepository.query(`EXECUTE min_stock_level`);
   }
+  async getBalance(): Promise<any> {
+    return await this.issuemedicineRepository.query(`EXECUTE balance_Quantity`);
+  }
 }

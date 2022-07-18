@@ -34,6 +34,7 @@ export class ReceiveMedicineController {
   getSpecificUom(@Param('item') item: string): Promise<any> {
     return this.receivemedicineService.getSpecificUom(item);
   }
+
   @Get()
   findAll(): Observable<ReceivePost[]> {
     return this.receivemedicineService.findAll();

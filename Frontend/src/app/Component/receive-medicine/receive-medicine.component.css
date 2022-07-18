@@ -40,6 +40,9 @@ table {
   overflow: auto;
 
 }
+td, th {
+  width: 29%;
+}
 .inupt-Field{
   width: 100%;
 }

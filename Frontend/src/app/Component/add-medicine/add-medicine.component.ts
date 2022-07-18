@@ -44,7 +44,7 @@ export class AddMedicineComponent implements OnInit {
           console.log(res);
           alert('Medicine added successfully');
           this.medicineForm.reset();
-          this.dialogref.close();
+          this.dialogref.close('Save');
 
         },
         error: () => {
