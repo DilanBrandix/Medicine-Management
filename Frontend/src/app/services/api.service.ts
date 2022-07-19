@@ -46,8 +46,8 @@ export class ApiService {
     return this.http.get<any>(`${this.apiUrl}/receive-medicine/items/${item}/${sku}`);
 }
 
-getUom(item:string){
-  return this.http.get<any>(`${this.apiUrl}/receive-medicine/uom/${item}`);
+getUom(item:string, sku:string){
+  return this.http.get<any>(`${this.apiUrl}/receive-medicine/uom/${item}/${sku}`);
 }
 getitems(){
   return this.http.get<any>(`${this.apiUrl}/medicine/med_items`);

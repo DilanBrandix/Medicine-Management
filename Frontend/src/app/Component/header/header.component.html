@@ -8,7 +8,7 @@
 
     <a mat-raised-button  class="button"  routerLink='/receive_medicine' *ngIf="!userDetails.getAdmin()">Receive Medicine</a>
     <a mat-raised-button  class="button"  routerLink='/issue_medicine' *ngIf="!userDetails.getAdmin()">Issue Medicine</a>
-    <a mat-raised-button  class="button"  routerLink='/view_report' *ngIf="!userDetails.getAdmin()">Reports</a>
+    <a mat-raised-button  class="button"  routerLink='/view_report'>Reports</a>
     <a mat-raised-button class="button" (click)="logOut()" >Logout</a>
   </mat-toolbar>
 </p>

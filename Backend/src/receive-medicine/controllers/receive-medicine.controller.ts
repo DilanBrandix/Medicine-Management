@@ -30,9 +30,12 @@ export class ReceiveMedicineController {
   ): Promise<any> {
     return this.receivemedicineService.getSpecificSkuItem(item, sku);
   }
-  @Get('uom/:item')
-  getSpecificUom(@Param('item') item: string): Promise<any> {
-    return this.receivemedicineService.getSpecificUom(item);
+  @Get('uom/:item/:sku')
+  getSpecificUom(
+    @Param('item') item: string,
+    @Param('sku') sku: string,
+  ): Promise<any> {
+    return this.receivemedicineService.getSpecificUom(item, sku);
   }
 
   @Get()

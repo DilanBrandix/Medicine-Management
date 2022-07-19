@@ -32,9 +32,9 @@ export class ReceiveMedicineService {
     );
   }
 
-  async getSpecificUom(item: string): Promise<any> {
+  async getSpecificUom(item: string, sku: string): Promise<any> {
     return await this.receivemedicineRepository.query(
-      `EXECUTE get_UOM '${item}'`,
+      `EXECUTE get_UOM '${item}','${sku}'`,
     );
   }
 

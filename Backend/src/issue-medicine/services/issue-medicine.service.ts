@@ -7,6 +7,7 @@ import { IssuePost } from '../model/issue-medicine.interface';
 
 @Injectable()
 export class IssueMedicineService {
+  balance = 'this';
   constructor(
     @InjectRepository(IssueMedicineEntity)
     private readonly issuemedicineRepository: Repository<IssueMedicineEntity>,

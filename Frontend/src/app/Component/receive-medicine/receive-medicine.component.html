@@ -37,7 +37,7 @@
         <mat-form-field appearance="outline" class = "inupt-Field">
           <mat-label>Select SKU</mat-label>
           <mat-select formControlName="sku" [(ngModel)]="selectedSku" name = "sku" >
-            <mat-option *ngFor="let sku of skus" [value]="sku.sku" (click)="getReceivedMedicine()">{{sku.sku}}</mat-option>
+            <mat-option *ngFor="let sku of skus" [value]="sku.sku" (click)="getReceivedMedicine();method1()">{{sku.sku}}</mat-option>
           </mat-select>
         </mat-form-field>
         <br>
@@ -53,6 +53,9 @@
           <input matInput placeholder="Quantity" formControlName="quantity">
         </mat-form-field>
       </form>
+      <div>
+        <p *ngIf="!receiveForm.valid">{{message}}</p>
+      </div>
       <button mat-raised-button class="button" (click)="receiveMedicine()">Update</button>
     </mat-card>
   </mat-grid-tile>

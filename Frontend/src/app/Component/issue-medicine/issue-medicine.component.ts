@@ -40,21 +40,23 @@ export interface Uom{
 })
 export class IssueMedicineComponent implements OnInit {
 
-  responseData = [];
-  calculateDiff(expire_date : string | number | Date) {
-    var date1:any = new Date(expire_date);
-    var date2:any = new Date();
-    var diffDays:any = Math.floor((date1 - date2) / (1000 * 60 * 60 * 24));
+  // responseData = [];
+  // calculateDiff(expire_date : string | number | Date) {
+  //   var date1:any = new Date(expire_date);
+  //   var date2:any = new Date();
+  //   var diffDays:any = Math.floor((date1 - date2) / (1000 * 60 * 60 * 24));
 
-    return diffDays;
-  }
+  //   return diffDays;
+  // }
 
   selects: Select[] = [];
   selections: Selection[] = [];
   skus: Sku[] = [];
   uoms:Uom[]=[];
+  balance : any[]=[];
   selectedItem: string = "";
   selectedSku: string = "";
+  message: string =""
 
 
   issueForm!:FormGroup
@@ -81,12 +83,11 @@ export class IssueMedicineComponent implements OnInit {
 
   });
 
-
-    this.getallMedicine();
     this.method();
+    this.getallMedicine();
     this.method1();
     this.getReceivedMedicine();
-    this.issueMedicine();
+    // this.issueMedicine();
   }
   displayedColumns: string[] = ['receive_date','manufacture_date','expire_date', 'age', 'Balance_qty'];
   dataSource!: MatTableDataSource<any>;
@@ -144,8 +145,9 @@ export class IssueMedicineComponent implements OnInit {
 
 //UOM Dropdown
   method1(){
-    if(this.selectedItem){
-      this.api.getUom(this.selectedItem)
+    if(this.selectedItem && this.selectedSku){
+       console.log("item and sku " + this.selectedItem, this.selectedSku)
+      this.api.getUom(this.selectedItem, this.selectedSku)
       // console.log(this.selectedItem);
       .subscribe({
         next:(res)=>{
@@ -203,6 +205,9 @@ export class IssueMedicineComponent implements OnInit {
 
       })
     }
+    else{
+      this.message="Please Fill All The Fields"
+    }
   }
 
   //Dynamic Table
@@ -212,10 +217,22 @@ getReceivedMedicine(){
   this.api.getMedicineDetails(this.selectedItem,this.selectedSku)
   .subscribe({
     next:(res)=>{
-      this.dataSource = new MatTableDataSource(res);
-        this.dataSource.paginator = this.paginator;
-        this.responseData=res;
-        // this.dataSource.sort = this.sort;
+      let details:any=[];
+      this.balance=res;
+      this.balance.map((quantity:any) => {
+                if(quantity.Balance_qty>0){
+
+                  details.push({
+                    no:quantity.no,item:quantity.item,Balance_qty:quantity.Balance_qty,
+                    expire_date:quantity.expire_date,manufacture_date:quantity.manufacture_date,
+                    age:quantity.age,receive_date:quantity.receive_date,sku:quantity.sku,uom:quantity.uom})
+                }
+               return details;
+                })
+
+              // console.log(details);
+                this.dataSource = new MatTableDataSource(details);
+                this.dataSource.paginator = this.paginator;
 
     },
     error:(err)=>{

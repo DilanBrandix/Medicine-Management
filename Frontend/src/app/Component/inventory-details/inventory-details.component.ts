@@ -4,6 +4,18 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
 
+export interface Qty{
+  Balance_qty: any;
+  age: any;
+  expire_date:any;
+  manufacture_date:any;
+  item:any;
+  no:number;
+  receive_date:any;
+  sku: any;
+  uom: any;
+}
+
 @Component({
   selector: 'app-inventory-details',
   templateUrl: './inventory-details.component.html',
@@ -11,6 +23,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class InventoryDetailsComponent implements OnInit {
 
+  balance : any[]=[];
   // responseData = [];
   // calculateDiff(expire_date : string | number | Date) {
   //   var date1:any = new Date(expire_date);
@@ -38,7 +51,8 @@ export class InventoryDetailsComponent implements OnInit {
   constructor(private api:ApiService) { }
 
   ngOnInit(): void {
-    this.inventoryDetails();
+    // this.inventoryDetails();
+    this.inventoryDetail();
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -48,24 +62,51 @@ export class InventoryDetailsComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  inventoryDetails(){
+  // inventoryDetails(){
+  //   this.api.getInventoryDetails()
+  //   .subscribe({
+  //     next:(res)=>{
+  //       this.dataSource = new MatTableDataSource(res);
+  //         this.dataSource.paginator = this.paginator;
+  //         this.dataSource.sort = this.sort;
+  //       // console.log(res);
+  //     },
+  //     error:(err)=>{
+  //       alert("Error")
+  //     }
+  //   })
+  // }
+
+  inventoryDetail(){
     this.api.getInventoryDetails()
     .subscribe({
       next:(res)=>{
-        this.dataSource = new MatTableDataSource(res);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        console.log(res);
+// console.log(res);
+        // this.balance = [];
+        let details:any=[];
+        this.balance=res;
+        this.balance.map((quantity:any) => {
+                  if(quantity.Balance_qty>0){
+
+                    details.push({
+                      no:quantity.no,item:quantity.item,Balance_qty:quantity.Balance_qty,
+                      expire_date:quantity.expire_date,manufacture_date:quantity.manufacture_date,
+                      age:quantity.age,receive_date:quantity.receive_date,sku:quantity.sku,uom:quantity.uom})
+                  }
+                 return details;
+                  })
+
+                console.log(details);
+                  this.dataSource = new MatTableDataSource(details);
+                  this.dataSource.paginator = this.paginator;
+                  this.dataSource.sort = this.sort;
+
       },
       error:(err)=>{
         alert("Error")
       }
     })
   }
-
-
-
-
 
 
 }

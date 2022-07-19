@@ -12,6 +12,8 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class ExpireDetailsComponent implements OnInit {
 
+  balance : any[]=[];
+
   // responseData = [];
   // calculateDiff(expire_date : string | number | Date) {
   //   var date1:any = new Date(expire_date);
@@ -45,10 +47,23 @@ export class ExpireDetailsComponent implements OnInit {
     this.api.getExpireDetails()
     .subscribe({
       next:(res)=>{
-        this.dataSource = new MatTableDataSource(res);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        // console.log(res);
+         let details:any=[];
+        this.balance=res;
+        this.balance.map((quantity:any) => {
+                  if(quantity.Balance_qty>0){
+
+                    details.push({
+                      no:quantity.no,item:quantity.item,Balance_qty:quantity.Balance_qty,
+                      expire_date:quantity.expire_date,manufacture_date:quantity.manufacture_date,
+                      age:quantity.age,receive_date:quantity.receive_date,sku:quantity.sku,uom:quantity.uom})
+                  }
+                 return details;
+                  })
+
+                console.log(details);
+                  this.dataSource = new MatTableDataSource(details);
+                  this.dataSource.paginator = this.paginator;
+                  this.dataSource.sort = this.sort;
       },
       error:(err)=>{
         alert("Error")

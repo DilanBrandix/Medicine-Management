@@ -2,7 +2,7 @@
 <mat-grid-list cols="2" rowHeight="100%">
   <mat-grid-tile class="grid" >
     <mat-card class="card">
-      <form class="example-form" [formGroup]="issueForm">
+      <form class="example-form" [formGroup]="issueForm" >
 
         <mat-form-field appearance="outline" class = "inupt-Field" *ngFor="let sno of selections">
           <mat-label>Issue no</mat-label>
@@ -19,7 +19,7 @@
       <mat-form-field appearance="outline" class = "inupt-Field">
         <mat-label>Select Item</mat-label>
         <mat-select formControlName="item" [(ngModel)]="selectedItem" name="select">
-          <mat-option *ngFor="let select of selects" [value]="select.item" (click)="method(); method1()">{{select.item}}</mat-option>
+          <mat-option *ngFor="let select of selects" [value]="select.item" (click)="method()">{{select.item}}</mat-option>
           <!-- <mat-option value="Amoxilin">Amoxilin</mat-option> -->
         </mat-select>
       </mat-form-field>
@@ -27,7 +27,7 @@
       <mat-form-field appearance="outline" class = "inupt-Field">
         <mat-label>Select SKU</mat-label>
         <mat-select formControlName="sku" [(ngModel)]="selectedSku" name = "sku">
-          <mat-option *ngFor="let sku of skus" [value]="sku.sku" (click)="getReceivedMedicine()">{{sku.sku}}</mat-option>
+          <mat-option *ngFor="let sku of skus" [value]="sku.sku" (click)="getReceivedMedicine();method1()">{{sku.sku}}</mat-option>
         </mat-select>
       </mat-form-field>
       <br>
@@ -65,10 +65,12 @@
         <mat-label>Quantity</mat-label>
         <input matInput placeholder="Quantity" formControlName="quantity">
       </mat-form-field>
-
     </form>
-
+    <div>
+      <p *ngIf="!issueForm.valid">{{message}}</p>
+    </div>
       <button mat-raised-button color="warn" class="button" (click)="issueMedicine()">Update</button>
+
     </mat-card>
   </mat-grid-tile>
 

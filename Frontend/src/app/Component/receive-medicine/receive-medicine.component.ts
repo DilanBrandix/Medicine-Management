@@ -34,14 +34,14 @@ export interface Uom{
 export class ReceiveMedicineComponent implements OnInit {
 
   //Aging calculation
-  responseData = [];
-  calculateDiff(expire_date : string | number | Date) {
-    var date1:any = new Date(expire_date);
-    var date2:any = new Date();
-    var diffDays:any = Math.floor((date1 - date2) / (1000 * 60 * 60 * 24));
+  // responseData = [];
+  // calculateDiff(expire_date : string | number | Date) {
+  //   var date1:any = new Date(expire_date);
+  //   var date2:any = new Date();
+  //   var diffDays:any = Math.floor((date1 - date2) / (1000 * 60 * 60 * 24));
 
-    return diffDays;
-  }
+  //   return diffDays;
+  // }
 
   date = new FormControl(new Date());
 
@@ -56,6 +56,8 @@ export class ReceiveMedicineComponent implements OnInit {
   uoms:Uom[]=[];
   selectedItem: string = "";
   selectedSku: string = "";
+  message: string = "";
+  balance : any[]=[];
   checked =  false;
 
   receiveForm!:FormGroup
@@ -126,8 +128,8 @@ export class ReceiveMedicineComponent implements OnInit {
 
 //UOM Dropdown
   method1(){
-    if(this.selectedItem){
-      this.api.getUom(this.selectedItem)
+    if(this.selectedItem && this.selectedSku){
+      this.api.getUom(this.selectedItem,this.selectedSku)
       // console.log(this.selectedItem);
       .subscribe({
         next:(res)=>{
@@ -186,6 +188,9 @@ export class ReceiveMedicineComponent implements OnInit {
 
       })
     }
+    else{
+      this.message="Please Fill All The Fields"
+    }
 
 }
 
@@ -196,10 +201,23 @@ getReceivedMedicine(){
   this.api.getMedicineDetails(this.selectedItem,this.selectedSku)
   .subscribe({
     next:(res)=>{
-      this.dataSource = new MatTableDataSource(res);
-        this.dataSource.paginator = this.paginator;
-        this.responseData=res;
-        // this.dataSource.sort = this.sort;
+      let details:any=[];
+      this.balance=res;
+      this.balance.map((quantity:any) => {
+                if(quantity.Balance_qty>0){
+
+                  details.push({
+                    no:quantity.no,item:quantity.item,Balance_qty:quantity.Balance_qty,
+                    expire_date:quantity.expire_date,manufacture_date:quantity.manufacture_date,
+                    age:quantity.age,receive_date:quantity.receive_date,sku:quantity.sku,uom:quantity.uom})
+                }
+               return details;
+                })
+
+              console.log(details);
+                this.dataSource = new MatTableDataSource(details);
+                this.dataSource.paginator = this.paginator;
+                // this.dataSource.sort = this.sort;
 
     },
     error:(err)=>{
