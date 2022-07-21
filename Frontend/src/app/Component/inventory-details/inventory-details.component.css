@@ -21,21 +21,34 @@ td, th {
 }
 .search{
   width: 90%;
-  margin-top: 2%;
+
   margin-left: 5%;
 }
 .button{
   width: 100%;
   background-color: white;
   color: black;
-  height: 65%;
+  height: fit-content;
 }
 
 
 
 .example-icon{
-  margin-left: 90%;
-  margin-top: 2%;
+  margin-left: 70%;
   background-color: white;
   color: black;
+}
+
+mat-grid-tile {
+  /* background: lightblue; */
+
+}
+mat-grid-list {
+  width: 90%;
+  margin-left: 5%;
+}
+
+.h2{
+  margin-top: 2%;
+  margin-left: 50%;
 }

@@ -37,8 +37,17 @@ td, th {
 
 
 .example-icon{
-  margin-left: 90%;
+  margin-left: 70%;
   margin-top: 2%;
   background-color: white;
   color: black;
+}
+mat-grid-list {
+  width: 90%;
+  margin-left: 5%;
+}
+
+.h2{
+  margin-top: 2%;
+  margin-left: 40%;
 }

@@ -4,6 +4,10 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
 
+export interface Tile {
+  cols: number;
+  rows: number;
+}
 
 @Component({
   selector: 'app-expire-details',
@@ -11,6 +15,11 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./expire-details.component.css']
 })
 export class ExpireDetailsComponent implements OnInit {
+
+  tiles: Tile[] = [
+    {cols: 2, rows: 2},
+
+  ];
 
   balance : any[]=[];
 

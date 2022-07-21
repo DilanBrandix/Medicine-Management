@@ -1,11 +1,24 @@
 
 <body>
   <div class="body">
-    <div>
+
+    <mat-grid-list cols="4" rowHeight="6:1">
+      <mat-grid-tile
+      *ngFor="let tile of tiles"
+      [colspan]="tile.cols"
+      [rowspan]="tile.rows">
+        <h2  class="h2">Inventory Transaction Details</h2>
+      </mat-grid-tile>
+      <mat-grid-tile
+      *ngFor="let tile of tiles"
+      [rowspan]="tile.rows">
       <button mat-fab  (click)="exporter.exportTable('csv', {fileName:'Inventory Transaction Details'})"
       class="example-icon" aria-label="Example icon-button with menu icon">
         <mat-icon>assignment</mat-icon>
         </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <div>
 
           <mat-form-field appearance="outline" class="search">
             <mat-label>Filter</mat-label>

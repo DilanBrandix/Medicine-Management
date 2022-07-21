@@ -4,12 +4,23 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
 
+export interface Tile {
+  cols: number;
+  rows: number;
+}
+
 @Component({
   selector: 'app-inventory-transaction',
   templateUrl: './inventory-transaction.component.html',
   styleUrls: ['./inventory-transaction.component.css']
 })
 export class InventoryTransactionComponent implements OnInit {
+
+  tiles: Tile[] = [
+    {cols: 3, rows: 2},
+
+  ];
+
 
   displayedColumns: string[] = ['item', 'sku','uom','date','manufacture_date','expire_date','trans_date','method','quantity'];
   dataSource!: MatTableDataSource<any>;

@@ -4,6 +4,11 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
 
+export interface Tile {
+  cols: number;
+  rows: number;
+}
+
 export interface Qty{
   Balance_qty: any;
   age: any;
@@ -22,6 +27,11 @@ export interface Qty{
   styleUrls: ['./inventory-details.component.css']
 })
 export class InventoryDetailsComponent implements OnInit {
+
+  tiles: Tile[] = [
+    {cols: 2, rows: 2},
+
+  ];
 
   balance : any[]=[];
   // responseData = [];

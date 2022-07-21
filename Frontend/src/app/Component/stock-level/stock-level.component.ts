@@ -4,6 +4,10 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
 
+export interface Tile {
+  cols: number;
+  rows: number;
+}
 
 @Component({
   selector: 'app-stock-level',
@@ -12,12 +16,13 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class StockLevelComponent implements OnInit {
 
-
-
+  tiles: Tile[] = [
+    {cols: 2, rows: 2},
+  ];
 
    total:any=0;
 
-  displayedColumns: string[] = ['item', 'sku','uom','Balance_qty'];
+  displayedColumns: string[] = ['item', 'sku','uom','Balance_qty','min_stock'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -45,7 +50,7 @@ export class StockLevelComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
 
-        console.log(res);
+        // console.log(res);
       },
       error:(err)=>{
         alert("Error")
