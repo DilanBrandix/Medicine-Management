@@ -25,6 +25,7 @@ export class LoginService {
     if (!localStorage.getItem('userToken')) {
       this.router.navigate(['/']);
     }
+    window.location.reload();
   }
 
   isUserAuthenticated() {

@@ -6,6 +6,7 @@ import { FormGroup,FormBuilder,Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import {FormControl} from '@angular/forms';
 import {SelectionModel} from '@angular/cdk/collections';
+import { UserDetailsService } from 'src/app/services/user-details.service';
 
 
 export interface Tile {
@@ -59,6 +60,8 @@ export class ReceiveMedicineComponent implements OnInit {
   message: string = "";
   balance : any[]=[];
   checked =  false;
+  user: any;
+  id: any;
 
   receiveForm!:FormGroup
 
@@ -67,6 +70,7 @@ export class ReceiveMedicineComponent implements OnInit {
   constructor(
     private api: ApiService,
     private formBuilder: FormBuilder,
+    private userDetails:UserDetailsService
   ) {}
 
 
@@ -80,6 +84,9 @@ export class ReceiveMedicineComponent implements OnInit {
       sku: ['', Validators.required],
       uom: ['', Validators.required],
       quantity: ['', Validators.required],
+      plant: ['', Validators.required],
+      user_id: ['', Validators.required],
+      remarks: [''],
   });
 
 
@@ -87,6 +94,7 @@ export class ReceiveMedicineComponent implements OnInit {
   this.method();
   this.method1();
   this.getReceivedMedicine();
+  this.getUser();
   // this.getBalanceQuantity();
 
   }
@@ -100,9 +108,9 @@ export class ReceiveMedicineComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+  // ngAfterViewInit() {
+  //   this.dataSource.paginator = this.paginator;
+  // }
 
 
 //SKU Dropdown
@@ -166,7 +174,7 @@ export class ReceiveMedicineComponent implements OnInit {
 //Insert Received Medicine
   receiveMedicine(){
     if(this.receiveForm.valid){
-      // console.log(this.medicineForm.value)
+      // console.log(this.receiveForm.value)
       this.api.postReceiveMedicine(this.receiveForm.value)
       .subscribe({
         next:(res)=>{
@@ -178,6 +186,7 @@ export class ReceiveMedicineComponent implements OnInit {
           this.receiveForm.controls['sku'].reset();
           this.receiveForm.controls['uom'].reset();
           this.receiveForm.controls['quantity'].reset();
+          this.receiveForm.controls['remarks'].reset();
           this.getReceivedMedicine();
 
         },
@@ -196,9 +205,9 @@ export class ReceiveMedicineComponent implements OnInit {
 
 //Dynamic Table
 getReceivedMedicine(){
-  if(this.selectedItem && this.selectedSku){
+  if(this.selectedItem && this.selectedSku && this.user.plant){
     // console.log("item and sku " + this.selectedItem, this.selectedSku)
-  this.api.getMedicineDetails(this.selectedItem,this.selectedSku)
+  this.api.getMedicineDetails(this.selectedItem,this.selectedSku, this.user.plant)
   .subscribe({
     next:(res)=>{
       let details:any=[];
@@ -214,7 +223,7 @@ getReceivedMedicine(){
                return details;
                 })
 
-              console.log(details);
+              // console.log(details);
                 this.dataSource = new MatTableDataSource(details);
                 this.dataSource.paginator = this.paginator;
                 // this.dataSource.sort = this.sort;
@@ -225,6 +234,24 @@ getReceivedMedicine(){
     }
   })
 }
+}
+
+async getUser(){
+  this.id = await this.userDetails.getUserDetails()
+  // console.log(this.userDetails.getUserDetails());
+  this.api.userDetails(this.id).subscribe({
+    next:(res)=>{
+      // console.log(res);
+      this.user = res;
+      // console.log(this.user);
+
+    },
+  error:(err)=>{
+    alert("Error")
+  }
+  })
+
+
 }
 // getBalanceQuantity(){
 //   this.api.getBalance()

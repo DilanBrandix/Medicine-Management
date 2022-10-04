@@ -42,8 +42,8 @@ export class ApiService {
     return this.http.get<any>(`${this.apiUrl}/receive-medicine/items/${item}`);
   }
 
-  getMedicineDetails(item:string, sku:string){
-    return this.http.get<any>(`${this.apiUrl}/receive-medicine/items/${item}/${sku}`);
+  getMedicineDetails(item:string, sku:string, plant:string){
+    return this.http.get<any>(`${this.apiUrl}/receive-medicine/items/${item}/${sku}/${plant}`);
 }
 
 getUom(item:string, sku:string){
@@ -66,5 +66,32 @@ getMinStock(){
 }
 getBalance(){
   return this.http.get<any>(`${this.apiUrl}/issue-medicine/balance`);
+}
+getUsers(){
+  return this.http.get<any>(`${this.apiUrl}/users`);
+}
+addUsers(data : any){
+  return this.http.post<any>(`${this.apiUrl}/users/create`,data);
+}
+deleteUsers(id:number){
+  return this.http.delete<any>(`${this.apiUrl}/users/delete/`+id);
+}
+updateUser(data:any, id:number){
+  return this.http.put<any>(`${this.apiUrl}/users/`+id, data);
+}
+userDetails(id: number){
+  return this.http.get<any>(`${this.apiUrl}/users/user/${id}`);
+}
+inv_plant_details(plant: any){
+  return this.http.get<any>(`${this.apiUrl}/issue-medicine/inv_plant_details/${plant}`);
+}
+transaction_details_plant(plant: any){
+  return this.http.get<any>(`${this.apiUrl}/issue-medicine/transaction_details_plant/${plant}`);
+}
+min_stock_plant(plant: any){
+  return this.http.get<any>(`${this.apiUrl}/issue-medicine/min_stock_plant/${plant}`);
+}
+expire_details_plant(plant: any){
+  return this.http.get<any>(`${this.apiUrl}/issue-medicine/expire_details_plant/${plant}`);
 }
 }

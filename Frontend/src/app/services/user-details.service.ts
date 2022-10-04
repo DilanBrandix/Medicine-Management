@@ -41,8 +41,29 @@ export class UserDetailsService {
       userRole = this.user.user_role;
       console.log('this is '+userRole);
     }
-    console.log(userRole);
+    // console.log(userRole);
     return String(userRole);
+
+  }
+
+  getUserDetails(){
+    let id
+    this.user = <any>JSON.parse(localStorage.getItem('userToken') || '');
+    if (this.user) {
+    id= this.user.id;
+    }
+    return String(id);
+  }
+
+  getPlant(): String {
+    let plant;
+    this.user = <any>JSON.parse(localStorage.getItem('userToken') || '');
+    if (this.user) {
+      plant = this.user.plant;
+      console.log('this is '+plant);
+    }
+    // console.log(userRole);
+    return String(plant);
 
   }
 }

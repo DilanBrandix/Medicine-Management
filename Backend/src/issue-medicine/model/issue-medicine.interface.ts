@@ -9,4 +9,7 @@ export interface IssuePost {
   manufacture_date?: Date;
   expire_date?: Date;
   quantity?: any;
+  plant?: any;
+  user_id?: any;
+  remarks?: any;
 }

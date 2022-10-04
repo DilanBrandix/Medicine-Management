@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
 import { AddMedicineComponent } from '../add-medicine/add-medicine.component';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { DeleteMedDialogComponent } from '../delete-med-dialog/delete-med-dialog.component';
 
 @Component({
   selector: 'app-view-medicine',
@@ -42,6 +43,16 @@ export class ViewMedicineComponent implements OnInit {
       }
     })
 
+  }
+
+  openDeleteMedDialog(no:number){
+    this.matdialog.open(DeleteMedDialogComponent,{
+      width:'23%'
+    }).afterClosed().subscribe(value=>{
+      if(value==='Yes'){
+        this.deleteItem(no);
+      }
+    })
   }
 
  getallMedicine(){

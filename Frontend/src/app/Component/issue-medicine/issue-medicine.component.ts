@@ -6,6 +6,7 @@ import { FormGroup,FormBuilder,Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import {FormControl} from '@angular/forms';
 import {SelectionModel} from '@angular/cdk/collections';
+import { UserDetailsService } from 'src/app/services/user-details.service';
 
 export interface Select{
   no: number;
@@ -57,6 +58,9 @@ export class IssueMedicineComponent implements OnInit {
   selectedItem: string = "";
   selectedSku: string = "";
   message: string =""
+  user: any;
+  id: any;
+
 
 
   issueForm!:FormGroup
@@ -66,6 +70,7 @@ export class IssueMedicineComponent implements OnInit {
   constructor(
     private api: ApiService,
     private formBuilder: FormBuilder,
+    private userDetails:UserDetailsService
   ) { }
 
   ngOnInit(): void {
@@ -79,6 +84,9 @@ export class IssueMedicineComponent implements OnInit {
       manufacture_date: ['', Validators.required],
       expire_date: ['', Validators.required],
       quantity: ['', Validators.required],
+      plant: ['', Validators.required],
+      user_id: ['', Validators.required],
+      remarks: [''],
 
 
   });
@@ -87,6 +95,7 @@ export class IssueMedicineComponent implements OnInit {
     this.getallMedicine();
     this.method1();
     this.getReceivedMedicine();
+    this.getUser();
     // this.issueMedicine();
   }
   displayedColumns: string[] = ['receive_date','manufacture_date','expire_date', 'age', 'Balance_qty'];
@@ -111,15 +120,15 @@ export class IssueMedicineComponent implements OnInit {
     this.selection.toggle(row);
     this.selections=[];
     this.selections = this.selection.selected
-    console.log(this.selections);
+    // console.log(this.selections);
   }
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+  // ngAfterViewInit() {
+  //   this.dataSource.paginator = this.paginator;
+  // }
 
 
   //SKU Dropdown
@@ -146,7 +155,7 @@ export class IssueMedicineComponent implements OnInit {
 //UOM Dropdown
   method1(){
     if(this.selectedItem && this.selectedSku){
-       console.log("item and sku " + this.selectedItem, this.selectedSku)
+      //  console.log("item and sku " + this.selectedItem, this.selectedSku)
       this.api.getUom(this.selectedItem, this.selectedSku)
       // console.log(this.selectedItem);
       .subscribe({
@@ -185,7 +194,7 @@ export class IssueMedicineComponent implements OnInit {
       this.api.postIssueMedicine(this.issueForm.value)
       .subscribe({
         next:(res)=>{
-          console.log(res);
+          // console.log(res);
           alert("Medicine Issued successfully")
           this.issueForm.controls['issue_no'].reset();
           this.issueForm.controls['item'].reset();
@@ -195,6 +204,7 @@ export class IssueMedicineComponent implements OnInit {
           this.issueForm.controls['manufacture_date'].reset();
           this.issueForm.controls['expire_date'].reset();
           this.issueForm.controls['quantity'].reset();
+          this.issueForm.controls['remarks'].reset();
           this.getReceivedMedicine();
 
         },
@@ -212,9 +222,9 @@ export class IssueMedicineComponent implements OnInit {
 
   //Dynamic Table
 getReceivedMedicine(){
-  if(this.selectedItem && this.selectedSku){
+  if(this.selectedItem && this.selectedSku && this.user.plant){
     // console.log("item and sku " + this.selectedItem, this.selectedSku)
-  this.api.getMedicineDetails(this.selectedItem,this.selectedSku)
+  this.api.getMedicineDetails(this.selectedItem,this.selectedSku, this.user.plant)
   .subscribe({
     next:(res)=>{
       let details:any=[];
@@ -241,6 +251,22 @@ getReceivedMedicine(){
   })
 }
 }
+async getUser(){
+  this.id = await this.userDetails.getUserDetails()
+  // console.log(this.userDetails.getUserDetails());
+  this.api.userDetails(this.id).subscribe({
+    next:(res)=>{
+      // console.log(res);
+      this.user = res;
+      // console.log(this.user);
 
+    },
+  error:(err)=>{
+    alert("Error")
+  }
+  })
+
+
+}
 
 }

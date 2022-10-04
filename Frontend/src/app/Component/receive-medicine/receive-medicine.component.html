@@ -4,6 +4,14 @@
   <mat-grid-tile class="grid">
     <mat-card class="card">
       <form [formGroup]="receiveForm">
+        <mat-form-field appearance="outline" class = "inupt-Field1">
+          <mat-label>Id</mat-label>
+          <input matInput placeholder="id" formControlName="user_id" [ngModel]="user?.id" [readonly]="true">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class = "inupt-Field">
+          <mat-label>Plant</mat-label>
+          <input matInput placeholder="Plant" formControlName="plant" [ngModel]="user?.plant" [readonly]="true">
+        </mat-form-field>
         <mat-form-field appearance="outline" class = "inupt-Field" >
           <mat-label>Received Date</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="date" [disabled]="true">
@@ -51,6 +59,11 @@
         <mat-form-field appearance="outline" class = "inupt-Field">
           <mat-label>Quantity</mat-label>
           <input matInput placeholder="Quantity" formControlName="quantity">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="Max 25 characters" class="inupt-Field" appearance="outline">
+          <mat-label>Leave a Remark</mat-label>
+          <textarea matInput placeholder="Remark" formControlName ="remarks"  [maxLength]="25"></textarea>
         </mat-form-field>
       </form>
       <div>

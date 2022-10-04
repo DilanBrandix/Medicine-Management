@@ -10,6 +10,8 @@ import { InventoryDetailsComponent } from './Component/inventory-details/invento
 import { InventoryTransactionComponent } from './Component/inventory-transaction/inventory-transaction.component';
 import { StockLevelComponent } from './Component/stock-level/stock-level.component';
 import { ExpireDetailsComponent } from './Component/expire-details/expire-details.component';
+import { ViewUserComponent } from './Component/view-user/view-user.component';
+import { ProfileComponent } from './Component/profile/profile.component';
 import { AuthGuard } from './Component/authentication/authentication';
 
 const routes: Routes = [
@@ -48,6 +50,16 @@ const routes: Routes = [
   {
     path: 'expire_details',
     component: ExpireDetailsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'view_user',
+    component: ViewUserComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
     canActivate: [AuthGuard],
   },
 ];

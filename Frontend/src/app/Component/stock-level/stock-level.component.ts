@@ -3,6 +3,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
+import { UserDetailsService } from 'src/app/services/user-details.service';
 
 export interface Tile {
   cols: number;
@@ -22,13 +23,13 @@ export class StockLevelComponent implements OnInit {
 
    total:any=0;
 
-  displayedColumns: string[] = ['item', 'sku','uom','Balance_qty','min_stock'];
+  displayedColumns: string[] = ['item', 'sku','uom','plant','Balance_qty','min_stock'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private api:ApiService) { }
+  constructor(private api:ApiService, private userDetails:UserDetailsService) { }
 
   ngOnInit(): void {
     this.inventoryDetails();
@@ -42,7 +43,10 @@ export class StockLevelComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  inventoryDetails(){
+  async inventoryDetails(){
+    const userRole = await this.userDetails.getUserRole()
+    const plant = await this.userDetails.getPlant()
+    if(userRole === 'admin'){
     this.api.getMinStock()
     .subscribe({
       next:(res)=>{
@@ -56,6 +60,21 @@ export class StockLevelComponent implements OnInit {
         alert("Error")
       }
     })
+  }else {
+    this.api.min_stock_plant(plant)
+    .subscribe({
+      next:(res)=>{
+        this.dataSource = new MatTableDataSource(res);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+
+        // console.log(res);
+      },
+      error:(err)=>{
+        alert("Error")
+      }
+    })
+  }
   }
 
   // quantity(){

@@ -1,0 +1,28 @@
+.card{
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 5%;
+  margin-bottom: 10%;
+  height: 50%;
+  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%),
+  0px 3px 14px 2px rgb(0 0 0 / 12%);
+  overflow: auto;
+
+
+}
+
+.inupt-Field1{
+  width: 23.5%;
+  margin-left: 2%;
+}
+.inupt-Field{
+  width: 23.5%;
+}
+.icon{
+  font-size: 100px;
+}
+.button{
+  background-color: white;
+  color: black;
+}

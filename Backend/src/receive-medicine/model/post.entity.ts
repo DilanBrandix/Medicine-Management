@@ -25,4 +25,13 @@ export class ReceiveMedicineEntity {
 
   @Column({ default: '' })
   quantity: number;
+
+  @Column({ default: '' })
+  plant: string;
+
+  @Column({ default: '' })
+  user_id: number;
+
+  @Column({ default: '' })
+  remarks: string;
 }

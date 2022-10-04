@@ -46,6 +46,12 @@ td, th {
 .inupt-Field{
   width: 100%;
 }
+
+.inupt-Field1{
+  width: 0%;
+  visibility: hidden;
+}
+
 th.mat-header-cell {
   text-align: center;
 }

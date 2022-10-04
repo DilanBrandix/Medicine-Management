@@ -8,24 +8,26 @@ body{
 }
 .mat-elevation-z8{
 
-  width: 90%;
-  margin-left: 5%;
-  margin-right: 5%;
+  width: 94%;
+  margin-left: 3%;
+  margin-right: 3%;
 
 
 }
 table {
   width: 100%;
+  font-size: small;
 
 }
 td, th {
-  width: 12%;
+  width: 10%;
+  font-size: smaller;
 
 }
 .search{
-  width: 90%;
+  width: 94%;
   margin-top: 2%;
-  margin-left: 5%;
+  margin-left: 3%;
 }
 .button{
   width: 100%;

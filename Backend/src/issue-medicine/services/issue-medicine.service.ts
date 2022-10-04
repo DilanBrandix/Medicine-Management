@@ -23,16 +23,37 @@ export class IssueMedicineService {
       `EXECUTE inventory_details_report`,
     );
   }
+  async findPlantDetails(plant: string): Promise<any> {
+    return await this.issuemedicineRepository.query(
+      `EXECUTE inventory_details_report_nurse '${plant}'`,
+    );
+  }
   async findTransaction(): Promise<any> {
     return await this.issuemedicineRepository.query(
       `EXECUTE inventory_transaction_details`,
     );
   }
+
+  async findPlantTransaction(plant: string): Promise<any> {
+    return await this.issuemedicineRepository.query(
+      `EXECUTE inventory_transaction_details_nurse'${plant}'`,
+    );
+  }
   async findExpDetails(): Promise<any> {
     return await this.issuemedicineRepository.query(`EXECUTE expire_details`);
   }
+  async findExpDetails_plant(plant: string): Promise<any> {
+    return await this.issuemedicineRepository.query(
+      `EXECUTE expire_details_nurse '${plant}'`,
+    );
+  }
   async findMinStockLevel(): Promise<any> {
     return await this.issuemedicineRepository.query(`EXECUTE min_stock_level`);
+  }
+  async findMinStockLevel_plant(plant: string): Promise<any> {
+    return await this.issuemedicineRepository.query(
+      `EXECUTE min_stock_level_nurse '${plant}'`,
+    );
   }
   async getBalance(): Promise<any> {
     return await this.issuemedicineRepository.query(`EXECUTE balance_Quantity`);

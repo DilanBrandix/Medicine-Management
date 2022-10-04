@@ -23,12 +23,13 @@ export class ReceiveMedicineController {
     return this.receivemedicineService.getSpecificSku(item);
   }
 
-  @Get('items/:item/:sku')
+  @Get('items/:item/:sku/:plant')
   async getSpecificSkuItem(
     @Param('item') item: string,
     @Param('sku') sku: string,
+    @Param('plant') plant: string,
   ): Promise<any> {
-    return this.receivemedicineService.getSpecificSkuItem(item, sku);
+    return this.receivemedicineService.getSpecificSkuItem(item, sku, plant);
   }
   @Get('uom/:item/:sku')
   getSpecificUom(

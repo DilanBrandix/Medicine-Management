@@ -17,7 +17,8 @@ table {
   width: 100%;
 }
 td, th {
-  width: 15%;
+  width: 13%;
+  font-size: smaller;
 }
 .search{
   width: 90%;
@@ -39,10 +40,10 @@ td, th {
   color: black;
 }
 
-mat-grid-tile {
-  /* background: lightblue; */
+/* mat-grid-tile {
+  background: lightblue;
 
-}
+} */
 mat-grid-list {
   width: 90%;
   margin-left: 5%;

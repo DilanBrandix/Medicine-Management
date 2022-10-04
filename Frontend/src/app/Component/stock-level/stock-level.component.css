@@ -19,7 +19,8 @@ table {
 
 }
 td, th {
-  width: 20%;
+  width: 15%;
+  font-size: smaller;
 
 }
 .search{

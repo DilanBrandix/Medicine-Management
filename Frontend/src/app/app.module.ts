@@ -23,6 +23,11 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import { InventoryTransactionComponent } from './Component/inventory-transaction/inventory-transaction.component';
 import { StockLevelComponent } from './Component/stock-level/stock-level.component';
 import { ExpireDetailsComponent } from './Component/expire-details/expire-details.component';
+import { AddUserComponent } from './Component/add-user/add-user.component';
+import { ViewUserComponent } from './Component/view-user/view-user.component';
+import { ProfileComponent } from './Component/profile/profile.component';
+import { DeleteDialogComponent } from './Component/delete-dialog/delete-dialog.component';
+import { DeleteMedDialogComponent } from './Component/delete-med-dialog/delete-med-dialog.component';
 
 
 @NgModule({
@@ -39,6 +44,11 @@ import { ExpireDetailsComponent } from './Component/expire-details/expire-detail
     InventoryTransactionComponent,
     StockLevelComponent,
     ExpireDetailsComponent,
+    AddUserComponent,
+    ViewUserComponent,
+    ProfileComponent,
+    DeleteDialogComponent,
+    DeleteMedDialogComponent,
 
   ],
   imports: [

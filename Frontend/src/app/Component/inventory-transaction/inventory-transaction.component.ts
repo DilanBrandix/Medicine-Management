@@ -3,6 +3,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
+import { UserDetailsService } from 'src/app/services/user-details.service';
 
 export interface Tile {
   cols: number;
@@ -22,13 +23,13 @@ export class InventoryTransactionComponent implements OnInit {
   ];
 
 
-  displayedColumns: string[] = ['item', 'sku','uom','date','manufacture_date','expire_date','trans_date','method','quantity'];
+  displayedColumns: string[] = ['item', 'sku','uom','plant','date','manufacture_date','expire_date','trans_date','method','quantity','remarks'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private api:ApiService) { }
+  constructor(private api:ApiService,private userDetails:UserDetailsService) { }
 
   ngOnInit(): void {
     this.inventoryDetails();
@@ -41,19 +42,39 @@ export class InventoryTransactionComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  inventoryDetails(){
-    this.api.getTransactionDetails()
-    .subscribe({
-      next:(res)=>{
-        this.dataSource = new MatTableDataSource(res);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        console.log(res);
-      },
-      error:(err)=>{
-        alert("Error")
-      }
-    })
+  async inventoryDetails(){
+    const userRole = await this.userDetails.getUserRole()
+    const plant = await this.userDetails.getPlant()
+    if(userRole === 'admin'){
+      this.api.getTransactionDetails()
+      .subscribe({
+        next:(res)=>{
+          this.dataSource = new MatTableDataSource(res);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          // console.log(res);
+        },
+        error:(err)=>{
+          alert("Error")
+        }
+      })
+
+    }else {
+      this.api.transaction_details_plant(plant)
+      .subscribe({
+        next:(res)=>{
+          this.dataSource = new MatTableDataSource(res);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          // console.log(res);
+        },
+        error:(err)=>{
+          alert("Error")
+        }
+      })
+
+    }
+
   }
 
 

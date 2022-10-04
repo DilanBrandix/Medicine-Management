@@ -1,0 +1,47 @@
+<mat-card class="card">
+  <mat-icon class="icon">account_circle</mat-icon>
+  <mat-card-title>{{user?.employee_Name}}</mat-card-title>
+  <mat-card-subtitle>{{user?.email}}</mat-card-subtitle>
+  <div>
+    <form class="example-form"  [formGroup]="userForm">
+      <mat-form-field appearance="outline" class = "inupt-Field" >
+        <mat-label>Username</mat-label>
+        <input  matInput placeholder="Username" formControlName="username" [ngModel]="user?.username" [readonly]="true">
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline" class = "inupt-Field1" >
+        <mat-label>Password</mat-label>
+        <input  matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" [ngModel]="user?.password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline" class = "inupt-Field1" >
+        <mat-label>User Role</mat-label>
+        <input  matInput placeholder="User_role" formControlName="user_role" [ngModel]="user?.user_role" [readonly]="true">
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline" class = "inupt-Field1" >
+        <mat-label>Plant</mat-label>
+        <input matInput placeholder="Plant" formControlName="plant" [ngModel]="user?.plant" [readonly]="true">
+      </mat-form-field>
+
+    </form>
+  </div>
+  <mat-card-actions align="end">
+    <button mat-raised-button  class="button" (click)="changePassword()">Change Password</button>
+  </mat-card-actions>
+
+</mat-card>
+
+
+
+
+
+
+
+

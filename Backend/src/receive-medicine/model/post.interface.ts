@@ -7,4 +7,7 @@ export interface ReceivePost {
   sku?: any;
   uom?: any;
   quantity?: any;
+  plant?: any;
+  user_id?: any;
+  remarks?: any;
 }

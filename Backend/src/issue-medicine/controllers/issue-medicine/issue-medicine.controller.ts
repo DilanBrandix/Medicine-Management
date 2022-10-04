@@ -21,6 +21,15 @@ export class IssueMedicineController {
   findDetails(): Promise<any> {
     return this.issuemedicineService.findDetails();
   }
+  @Get('inv_plant_details/:plant')
+  findPlantDetails(@Param('plant') plant: string): Promise<any> {
+    return this.issuemedicineService.findPlantDetails(plant);
+  }
+
+  @Get('transaction_details_plant/:plant')
+  findPlantTransaction(@Param('plant') plant: string): Promise<any> {
+    return this.issuemedicineService.findPlantTransaction(plant);
+  }
 
   @Get('transaction_details')
   findTransaction(): Promise<any> {
@@ -31,9 +40,18 @@ export class IssueMedicineController {
   findExpDetails(): Promise<any> {
     return this.issuemedicineService.findExpDetails();
   }
+  @Get('expire_details_plant/:plant')
+  findExpDetails_plant(@Param('plant') plant: string): Promise<any> {
+    return this.issuemedicineService.findExpDetails_plant(plant);
+  }
   @Get('min_stock')
   findMinStockLevel(): Promise<any> {
     return this.issuemedicineService.findMinStockLevel();
+  }
+
+  @Get('min_stock_plant/:plant')
+  findMinStockLevel_plant(@Param('plant') plant: string): Promise<any> {
+    return this.issuemedicineService.findMinStockLevel_plant(plant);
   }
   @Get('balance')
   getBalance(): Promise<any> {

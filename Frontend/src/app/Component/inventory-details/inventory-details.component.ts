@@ -3,6 +3,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
+import { UserDetailsService } from 'src/app/services/user-details.service';
 
 export interface Tile {
   cols: number;
@@ -52,13 +53,13 @@ export class InventoryDetailsComponent implements OnInit {
   //   return diffDays;
   // }
 
-  displayedColumns: string[] = ['item', 'sku','uom','receive_date','manufacture_date','expire_date','age','Balance_qty'];
+  displayedColumns: string[] = ['item', 'sku','uom','plant','receive_date','manufacture_date','expire_date','age','Balance_qty'];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private api:ApiService) { }
+  constructor(private api:ApiService,private userDetails:UserDetailsService) { }
 
   ngOnInit(): void {
     // this.inventoryDetails();
@@ -87,7 +88,10 @@ export class InventoryDetailsComponent implements OnInit {
   //   })
   // }
 
-  inventoryDetail(){
+  async inventoryDetail(){
+    const userRole = await this.userDetails.getUserRole()
+    const plant = await this.userDetails.getPlant()
+   if(userRole === 'admin'){
     this.api.getInventoryDetails()
     .subscribe({
       next:(res)=>{
@@ -101,12 +105,12 @@ export class InventoryDetailsComponent implements OnInit {
                     details.push({
                       no:quantity.no,item:quantity.item,Balance_qty:quantity.Balance_qty,
                       expire_date:quantity.expire_date,manufacture_date:quantity.manufacture_date,
-                      age:quantity.age,receive_date:quantity.receive_date,sku:quantity.sku,uom:quantity.uom})
+                      age:quantity.age,receive_date:quantity.receive_date,sku:quantity.sku,uom:quantity.uom,plant:quantity.plant})
                   }
                  return details;
                   })
 
-                console.log(details);
+                // console.log(details);
                   this.dataSource = new MatTableDataSource(details);
                   this.dataSource.paginator = this.paginator;
                   this.dataSource.sort = this.sort;
@@ -116,6 +120,37 @@ export class InventoryDetailsComponent implements OnInit {
         alert("Error")
       }
     })
+   } else {
+    this.api.inv_plant_details(plant)
+    .subscribe({
+      next:(res)=>{
+// console.log(res);
+        // this.balance = [];
+        let details:any=[];
+        this.balance=res;
+        this.balance.map((quantity:any) => {
+                  if(quantity.Balance_qty>0){
+
+                    details.push({
+                      no:quantity.no,item:quantity.item,Balance_qty:quantity.Balance_qty,
+                      expire_date:quantity.expire_date,manufacture_date:quantity.manufacture_date,
+                      age:quantity.age,receive_date:quantity.receive_date,sku:quantity.sku,uom:quantity.uom,plant:quantity.plant})
+                  }
+                 return details;
+                  })
+
+                // console.log(details);
+                  this.dataSource = new MatTableDataSource(details);
+                  this.dataSource.paginator = this.paginator;
+                  this.dataSource.sort = this.sort;
+
+      },
+      error:(err)=>{
+        alert("Error")
+      }
+    })
+
+   }
   }
 
 

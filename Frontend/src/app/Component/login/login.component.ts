@@ -2,6 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 
+
+export interface Users{
+  id: number;
+  username: String;
+  password: String;
+  plant: String;
+  user_role: String;
+}
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,6 +23,7 @@ export class LoginComponent implements OnInit {
   errorMessage: String = '';
   username: String = '';
   password: String = '';
+  // users: Users[]= [];
 
   constructor(private loginService: LoginService, private router: Router) { }
 
@@ -28,6 +38,9 @@ export class LoginComponent implements OnInit {
     this.loginService.findUser(user).subscribe((result) => {
       this.error = result.error;
       this.errorMessage = result.message;
+      // this.users = result
+      // console.log(this.users)
+
 
       if (!result.error) {
         localStorage.setItem('userToken', JSON.stringify(result.userFromDb));
@@ -38,6 +51,7 @@ export class LoginComponent implements OnInit {
         }
       }
     });
+
   }
 
 }

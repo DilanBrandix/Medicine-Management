@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>Add Users</h1>
+<div mat-dialog-content>
+  <form class="example-form" [formGroup]="userForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input formControlName = "username" matInput placeholder="Username">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input formControlName = "password" matInput placeholder="Password">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Select User Role</mat-label>
+      <mat-select formControlName="user_role">
+        <mat-option value="admin">Admin</mat-option>
+        <mat-option value="nurse">Nurse</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Select Plant</mat-label>
+      <mat-select formControlName="plant">
+        <mat-option value="All">All</mat-option>
+        <mat-option value="BLI-01">BLI-01</mat-option>
+        <!-- <mat-option value="BLI_02">BLI_02</mat-option> -->
+        <mat-option value="BLI-03">BLI-03</mat-option>
+        <mat-option value="BLI-04">BLI-04</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Employee Name </mat-label>
+      <input formControlName = "employee_Name" matInput placeholder="Employee Name">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Email </mat-label>
+      <input formControlName = "email" matInput placeholder="Email">
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-action [align]="'begin'">
+  <button mat-raised-button color="primary" (click)="addUser()">{{actionButton}}</button>
+  <button mat-raised-button color="warn" class="button" mat-dialog-close>Close</button>
+</div>
